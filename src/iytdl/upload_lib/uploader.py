@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 sup_btn = [
     [
         InlineKeyboardButton(
-            "Donasi", url="https://graph.org/file/4fbc60370fa2bb4a6ba4c.jpg"
+            "Donasi", url="https://telegra.ph/file/44bc540c88d3b70b5af2f.jpg"
         )
     ]
 ]
