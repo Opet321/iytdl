@@ -91,10 +91,7 @@ def time_formater(value: Union[timedelta, int], precision: int = 0) -> str:
     if seconds > 0 or not pieces:
         pieces.append(f"{seconds}s")
 
-    if precision == 0:
-        return " ".join(pieces)
-
-    return " ".join(pieces[:precision])
+    return " ".join(pieces) if precision == 0 else " ".join(pieces[:precision])
 
 
 def rnd_key(length: int = 8) -> str:
