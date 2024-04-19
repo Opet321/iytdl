@@ -223,10 +223,7 @@ class Extractor:
                             qual_dict[frmt_][fr_id] = fr_size
                 if str(video.get("acodec")).lower() != "none":
                     bitrrate = video.get("abr")
-                    if bitrrate is not None:
-                        bitrrate = int(bitrrate)
-                    else:
-                        bitrrate = 0
+                    bitrrate = int(bitrrate) if bitrrate is not None else 0
                     if bitrrate != 0:
                         audio_dict[
                             bitrrate
@@ -291,39 +288,28 @@ class Extractor:
             # - can have any video format except `.webm` as it is uploaded as document.
             choice_str = f"(bestvideo+bestaudio/best)[ext!=?webm]{filesize_flt}"
             disp_str = "[ 🎵 + 📹 ]  Best"
-        elif choice_id == "mp4":
-            # Best streamable format i.e `.mp4`
-            disp_str = "[ 🎵 + 📹 ]  Best MP4"
-            if yt_url:
-                choice_str = (
-                    "(bestvideo[ext=mp4]+(258/256/bestaudio[ext=m4a])"
-                    f"/best[ext=mp4]/best[ext!=webm]){filesize_flt}"
-                )
-            else:
-                choice_str = (
-                    "(bestvideo[ext=?mp4]+bestaudio[ext=?m4a]"
-                    f"/best[ext=?mp4]/best[ext!=?webm]/best){filesize_flt}"
-                )
         elif choice_id == "mp3":
             # Best audio quality upscaled to 320 kbps
             choice_str = "320"
             disp_str = "[ 🎵 ]  320 Kbps"
-        else:
-
-            if media_type == "v":
-                disp_str = f"[ 🎵 + 📹 ]  {choice_id}"
+        elif choice_id == "mp4":
+            # Best streamable format i.e `.mp4`
+            disp_str = "[ 🎵 + 📹 ]  Best MP4"
+            choice_str = (
+                f"(bestvideo[ext=mp4]+(258/256/bestaudio[ext=m4a])/best[ext=mp4]/best[ext!=webm]){filesize_flt}"
+                if yt_url
+                else f"(bestvideo[ext=?mp4]+bestaudio[ext=?m4a]/best[ext=?mp4]/best[ext!=?webm]/best){filesize_flt}"
+            )
+        elif media_type == "v":
+            disp_str = f"[ 🎵 + 📹 ]  {choice_id}"
                 # Merge best compatible audio with choosen video quality
-                if yt_url:
-                    choice_str = (
-                        f"({choice_id}+(258/256/bestaudio[ext=?m4a]/bestaudio)"
-                        f"/best[ext=mp4]/best)[ext!=?webm]{filesize_flt}"
-                    )
-                else:
-                    choice_str = (
-                        f"({choice_id}+bestaudio/best[ext=?mp4]/best)[ext!=?webm]{filesize_flt}"
-                    )
-            else:
-                disp_str = f"[ 🎵 ]  {choice_id}"
-                # Choosen audio quality
-                choice_str = choice_id
+            choice_str = (
+                f"({choice_id}+(258/256/bestaudio[ext=?m4a]/bestaudio)/best[ext=mp4]/best)[ext!=?webm]{filesize_flt}"
+                if yt_url
+                else f"({choice_id}+bestaudio/best[ext=?mp4]/best)[ext!=?webm]{filesize_flt}"
+            )
+        else:
+            disp_str = f"[ 🎵 ]  {choice_id}"
+            # Choosen audio quality
+            choice_str = choice_id
         return choice_str, disp_str
