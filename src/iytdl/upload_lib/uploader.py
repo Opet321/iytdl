@@ -18,7 +18,8 @@ from pyrogram.types import (
     InputMediaAnimation,
     Message,
     InlineKeyboardButton,
-    InlineKeyboardMarkup,
+    InlineKeyboardMarkup, 
+    WebAppInfo,
 )
 from pathlib import Path
 
