@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 sup_btn = [
     [
         InlineKeyboardButton(
-            "Donate", web_app=WebAppInfo(url="https://vault.pictures/p/c6e99f4364914b3ab6c017090221c111"
+            "Donate", web_app=WebAppInfo(url="https://vault.pictures/p/c6e99f4364914b3ab6c017090221c111")
         )
     ]
 ]
